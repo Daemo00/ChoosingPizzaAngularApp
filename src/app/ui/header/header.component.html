@@ -1,0 +1,35 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header nav-item" routerLinkActive="active">
+      <a class="navbar-brand" routerLink="/">
+        <span class="glyphicon glyphicon-home"></span> Choosing Pizza App
+    </a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="choosing" routerLinkActive="active">Choosing</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="editing" routerLinkActive="active">Editing</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <ng-template [ngIf]="!authService.isAuthenticated()">
+          <li routerLinkActive="active"><a routerLink="/signup"> <span class="glyphicon glyphicon-user"></span>  Register</a></li>
+          <li routerLinkActive="active"><a routerLink="/signin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ng-template>
+        <ng-template [ngIf]="authService.isAuthenticated()">
+          <li><a style="cursor: pointer;" (click)="onLogout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          <!--<li appDropdown class="dropdown">
+            <a style="cursor: pointer;" class="dropdown-toggle" role="button" #manageDataLink>Manage Data <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a style="cursor: pointer;" (click)="onSaveData()">Save Data</a></li>
+              <li><a style="cursor: pointer;" (click)="onFetchData()">Fetch Data</a></li>
+            </ul>
+          </li>-->
+        </ng-template>
+      </ul>
+    </div>
+  </div>
+</nav>

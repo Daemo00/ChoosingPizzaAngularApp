@@ -1,0 +1,48 @@
+<form (ngSubmit)="onSignup(f)" #f="ngForm">
+  <div class="form-group has-feedback" [ngClass]="{'has-success' : email.valid && email.touched, 'has-error': !email.valid && email.touched}">
+    <label class="control-label" for="email">E-mail</label>
+    <div class="input-group">
+      <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-envelope"></span>
+      </span>
+      <input type="email" class="form-control" id="email" aria-describedby="emailStatus" required ngModel email name="email" #email="ngModel">
+    </div>
+    <span *ngIf="email.valid && email.touched; then emailValid"></span>
+    <span *ngIf="!email.valid && email.touched; then emailInvalid"></span>
+    <ng-template #emailValid>
+      <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+      <span id="emailStatus" class="sr-only">(success)</span>
+    </ng-template>
+    <ng-template #emailInvalid>
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+      <span id="emailStatus" class="sr-only">(failure)</span>
+      <span class="help-block">Enter a valid email</span>
+    </ng-template>
+  </div>
+  <div class="form-group has-feedback" [ngClass]="{'has-success' : password.valid && password.touched, 'has-error': !password.valid && password.touched}">
+    <label class="control-label" for="password">Password</label>
+    <div class="input-group">
+      <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-lock"></span>
+      </span>
+      <input type="password" class="form-control" id="password" aria-describedby="passwordStatus" required ngModel password name="password"
+        #password="ngModel">
+    </div>
+    <span *ngIf="password.valid && password.touched; then passwordValid"></span>
+    <span *ngIf="!password.valid && password.touched; then passwordInvalid"></span>
+    <ng-template #passwordValid>
+      <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+      <span id="passwordStatus" class="sr-only">(success)</span>
+    </ng-template>
+    <ng-template #passwordInvalid>
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+      <span id="passwordStatus" class="sr-only">(failure)</span>
+      <span class="help-block">Enter a password</span>
+    </ng-template>
+  </div>
+
+  <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Submit</button>
+  <div [hidden]="!(f.touched && !f.valid)" class="alert alert-danger pull-right">
+    <strong>Danger!</strong> Form is not valid
+  </div>
+</form>
