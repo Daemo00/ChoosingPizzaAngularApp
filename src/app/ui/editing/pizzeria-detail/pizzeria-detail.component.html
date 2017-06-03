@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-xs-12">
+    <img src="{{pizzeria.imagePath}}" alt="" class="img-responsive" style="max-height: 300px">
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h1>{{pizzeria.name}}</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary dropdown-toggle">Manage pizzeria <span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a style="cursor: pointer;" (click)="onToShoppingList()">To Shopping list</a></li>
+        <li><a style="cursor: pointer;" [routerLink]="['edit']">Edit pizzeria</a></li>
+        <li><a style="cursor: pointer;" [routerLink]="['..']" (click)="onDeletepizzeria()">Delete pizzeria</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    {{pizzeria.description}}
+  </div>
+</div>
+<div class="row" *ngIf="pizzeria.pizze">
+  <div class="col-xs-12">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let pizza of pizzeria.pizze">
+        {{pizza.name}}
+      </li>
+    </ul>
+  </div>
+</div>

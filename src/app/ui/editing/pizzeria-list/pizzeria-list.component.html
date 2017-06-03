@@ -1,0 +1,15 @@
+<h1>All the pizzerie</h1>
+<div class="row">
+    <div class="col-xs-12">
+        <button class="btn btn-success" [routerLink]="['new']">
+            New Pizzeria
+        </button>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-xs-12">
+        <app-pizzeria-item *ngFor="let pizzeriaEl of pizzerie; let i = index" [pizzeria]="pizzeriaEl" [index]="i">
+        </app-pizzeria-item>
+    </div>
+</div>

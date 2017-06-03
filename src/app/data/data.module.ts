@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DataService } from "app/data/data.service";
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: []
+  declarations: [],
+  providers: [DataService]
 })
-export class DataModule { }
+export class DataModule { 
+
+  
+}

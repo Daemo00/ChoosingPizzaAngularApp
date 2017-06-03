@@ -5,6 +5,8 @@ import { RouterModule } from "@angular/router";
 import { AuthService } from "app/core/auth/auth.service";
 import { FirebaseResolver } from "app/core/firebase.resolver";
 import { AuthModule } from "app/core/auth/auth.module";
+import { DataService } from "app/data/data.service";
+import { HomeComponent } from "app/home/home.component";
 
 @NgModule({
   imports: [
@@ -12,10 +14,11 @@ import { AuthModule } from "app/core/auth/auth.module";
     RouterModule,
     AuthModule
   ],
-  declarations: [HeaderComponent],
+  declarations: [HeaderComponent, HomeComponent],
   exports: [HeaderComponent],
   providers: [
     AuthService,
+    DataService,
     FirebaseResolver
   ]
 })

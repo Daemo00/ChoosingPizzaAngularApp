@@ -1,0 +1,45 @@
+<h1>Pizzeria</h1>
+
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <div class="form-group has-feedback" [ngClass]="{'has-success' : name.valid && name.touched, 'has-error': !name.valid && name.touched}">
+    <label class="control-label" for="name">Name</label>
+    <div class="input-group">
+      <span class="input-group-addon"><span class="glyphicon glyphicon-cutlery"></span></span>
+      <input type="text" class="form-control" id="name" aria-describedby="nameStatus" required ngModel name="name" #name="ngModel">
+    </div>
+    <span *ngIf="name.valid && name.touched; then nameValid"></span>
+    <span *ngIf="!name.valid && name.touched; then nameInvalid"></span>
+    <ng-template #nameValid>
+      <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+      <span id="nameStatus" class="sr-only">(success)</span>
+    </ng-template>
+    <ng-template #nameInvalid>
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+      <span id="nameStatus" class="sr-only">(failure)</span>
+      <span class="help-block">Enter a valid name</span>
+    </ng-template>
+  </div>
+  <div class="form-group has-feedback" [ngClass]="{'has-success' : imagePath.valid && imagePath.touched, 'has-error': !imagePath.valid && imagePath.touched}">
+    <label class="control-label" for="imagePath">Image path</label>
+    <div class="input-group">
+      <span class="input-group-addon"><span class="glyphicon glyphicon-picture"></span></span>
+      <input type="text" class="form-control" id="imagePath" aria-describedby="imagePathStatus" required ngModel name="imagePath" #imagePath="ngModel">
+    </div>
+    <span *ngIf="imagePath.valid && imagePath.touched; then imagePathValid"></span>
+    <span *ngIf="!imagePath.valid && imagePath.touched; then imagePathInvalid"></span>
+    <ng-template #imagePathValid>
+      <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+      <span id="imagePathStatus" class="sr-only">(success)</span>
+    </ng-template>
+    <ng-template #imagePathInvalid>
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+      <span id="imagePathStatus" class="sr-only">(failure)</span>
+      <span class="help-block">Enter a valid image path</span>
+    </ng-template>
+  </div>
+
+  <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Submit</button>
+  <div [hidden]="!(f.touched && !f.valid)" class="alert alert-danger pull-right">
+    <strong>Danger!</strong> Form is not valid
+  </div>
+</form>
