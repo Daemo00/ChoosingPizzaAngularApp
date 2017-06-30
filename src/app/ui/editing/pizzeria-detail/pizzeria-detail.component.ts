@@ -25,10 +25,9 @@ export class PizzeriaDetailComponent implements OnInit {
         this.pizzeria = this.dataService.getPizzerie()[this.id];
       }
     );
-    // this.recipeBookService.recipeChanges.subscribe(
-    //   ()=>{
-    //     console.log("recipeChanges subscription");
-    //     this.recipe = this.recipeBookService.getRecipes()[this.id];
-    //   });
+  }
+
+  onDeletePizzeria(){
+    this.dataService.deletePizzeria(this.id);
   }
 }

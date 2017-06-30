@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm, FormGroup } from "@angular/forms";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm, FormGroup, FormControl, Validators, FormBuilder, FormArray } from "@angular/forms";
 import { DataService } from "app/data/data.service";
 import { Pizzeria } from "app/data/models/pizzeria.model";
 import { Router, ActivatedRoute, Params } from "@angular/router";
+import { Phone } from "app/data/models/phone.model";
+import { Pizza } from "app/data/models/pizza.model";
 
 @Component({
   selector: 'app-pizzeria-edit',
@@ -10,9 +12,10 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
   styleUrls: ['./pizzeria-edit.component.css']
 })
 export class PizzeriaEditComponent implements OnInit {
-  pizzeriaForm: FormGroup;
-  name: any;
   editMode: boolean;
+  phonesFormArray: FormArray;
+  pizzeFormArray: FormArray;
+  @ViewChild("pizzeriaForm") pizzeriaForm: FormGroup;
   pizzeria: Pizzeria;
   id: number;
 
@@ -31,17 +34,36 @@ export class PizzeriaEditComponent implements OnInit {
         }
       }
     );
-    // this.dataService.recipeChanges.subscribe(
-    //   ()=>{
-    //     this.pizzeria = this.dataService.getPizzerie()[this.id];
-    //   });
+    this.phonesFormArray = <FormArray>this.pizzeriaForm.get('phones');
+    this.pizzeFormArray = <FormArray>this.pizzeriaForm.get('pizzeConDett');
   }
 
   private initForm() {
-    this.pizzeriaForm =  Pizzeria.getFormGroup(this.pizzeria);
+    this.pizzeriaForm = Pizzeria.getFormGroup(this.pizzeria);
   }
 
   onSubmit(pizzeriaForm: NgForm) {
-    this.dataService.insertOrUpdatePizzeria(Pizzeria.fromFormGroup(pizzeriaForm.control));
+    this.dataService.insertOrUpdatePizzeria(Pizzeria.clone(pizzeriaForm.value));
+  }
+
+  onReset() {
+    console.log(this.pizzeriaForm);
+    this.pizzeriaForm.reset();
+  }
+
+  onAddPhone() {
+    (<FormArray>this.pizzeriaForm.get('phones')).push(Phone.getFormGroup());
+  }
+
+  onDeletePhone(index: number) {
+    (<FormArray>this.pizzeriaForm.get('phones')).removeAt(index);
+  }
+
+  onAddPizza() {
+    (<FormArray>this.pizzeriaForm.get('pizze')).push(Pizza.getFormGroup());
+  }
+
+  onDeletePizza(index: number) {
+    (<FormArray>this.pizzeriaForm.get('pizze')).removeAt(index);
   }
 }

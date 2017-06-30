@@ -8,12 +8,14 @@ import { PizzeriaEditComponent } from './pizzeria-edit/pizzeria-edit.component';
 import { PizzeriaDetailComponent } from './pizzeria-detail/pizzeria-detail.component';
 import { PizzeriaListComponent } from './pizzeria-list/pizzeria-list.component';
 import { PizzeriaItemComponent } from './pizzeria-list/pizzeria-item/pizzeria-item.component';
+import { SharedModule } from "app/shared/shared.module";
 
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
+    SharedModule,
     EditingRoutingModule
   ],
   declarations: [

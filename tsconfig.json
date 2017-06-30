@@ -8,13 +8,14 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "noStrictGenericChecks": true, //TODO remove when rxjs >=6
+    "target": "es6",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2016",
-      "dom"
+      "dom",
+      "es2016"
     ]
   }
 }

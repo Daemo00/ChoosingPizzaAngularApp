@@ -9,7 +9,5 @@ import { DataService } from "app/data/data.service";
   declarations: [],
   providers: [DataService]
 })
-export class DataModule { 
-
-  
+export class DataModule {  
 }

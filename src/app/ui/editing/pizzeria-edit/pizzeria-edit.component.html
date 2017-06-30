@@ -1,14 +1,14 @@
-<h1>Pizzeria</h1>
+<h1>Name is: {{ pizzeriaForm.controls.name.value }}</h1>
 
-<form (ngSubmit)="onSubmit(f)" #f="ngForm">
-  <div class="form-group has-feedback" [ngClass]="{'has-success' : name.valid && name.touched, 'has-error': !name.valid && name.touched}">
+<form [formGroup]="pizzeriaForm" (ngSubmit)="onSubmit()">
+  <div class="form-group has-feedback" [ngClass]="{'has-success' : pizzeriaForm.controls.name.valid && pizzeriaForm.controls.name.touched, 'has-error': !pizzeriaForm.controls.name.valid && pizzeriaForm.controls.name.touched}">
     <label class="control-label" for="name">Name</label>
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-cutlery"></span></span>
-      <input type="text" class="form-control" id="name" aria-describedby="nameStatus" required ngModel name="name" #name="ngModel">
+      <input type="text" class="form-control" id="name" aria-describedby="nameStatus" formControlName="name">
     </div>
-    <span *ngIf="name.valid && name.touched; then nameValid"></span>
-    <span *ngIf="!name.valid && name.touched; then nameInvalid"></span>
+    <span *ngIf="pizzeriaForm.controls.name.valid && pizzeriaForm.controls.name.touched; then nameValid"></span>
+    <span *ngIf="!pizzeriaForm.controls.name.valid && pizzeriaForm.controls.name.touched; then nameInvalid"></span>
     <ng-template #nameValid>
       <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
       <span id="nameStatus" class="sr-only">(success)</span>
@@ -19,14 +19,14 @@
       <span class="help-block">Enter a valid name</span>
     </ng-template>
   </div>
-  <div class="form-group has-feedback" [ngClass]="{'has-success' : imagePath.valid && imagePath.touched, 'has-error': !imagePath.valid && imagePath.touched}">
+  <div class="form-group has-feedback" [ngClass]="{'has-success' : pizzeriaForm.controls.imagePath.valid && pizzeriaForm.controls.imagePath.touched, 'has-error': !pizzeriaForm.controls.imagePath.valid && pizzeriaForm.controls.imagePath.touched}">
     <label class="control-label" for="imagePath">Image path</label>
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-picture"></span></span>
-      <input type="text" class="form-control" id="imagePath" aria-describedby="imagePathStatus" required ngModel name="imagePath" #imagePath="ngModel">
+      <input type="text" class="form-control" id="imagePath" aria-describedby="imagePathStatus" formControlName="imagePath">
     </div>
-    <span *ngIf="imagePath.valid && imagePath.touched; then imagePathValid"></span>
-    <span *ngIf="!imagePath.valid && imagePath.touched; then imagePathInvalid"></span>
+    <span *ngIf="pizzeriaForm.controls.imagePath.valid && pizzeriaForm.controls.imagePath.touched; then imagePathValid"></span>
+    <span *ngIf="!pizzeriaForm.controls.imagePath.valid && pizzeriaForm.controls.imagePath.touched; then imagePathInvalid"></span>
     <ng-template #imagePathValid>
       <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
       <span id="imagePathStatus" class="sr-only">(success)</span>
@@ -37,9 +37,58 @@
       <span class="help-block">Enter a valid image path</span>
     </ng-template>
   </div>
+  <div class="col-xs-12">
+    <div class="form-group has-feedback" formArrayName="phones">
+      <label class="control-label" for="phones">Phone number</label>
+      <div class="row" id="phones" *ngFor="let phone of phonesFormArray.controls; let i = index" [formGroupName]="i" style="margin-top: 10px">
+        <div class="input-group" [ngClass]="{'has-success' : pizzeriaForm.controls.phones.controls[i].valid && pizzeriaForm.controls.phones.controls[i].touched, 'has-error': !pizzeriaForm.controls.phones.controls[i].valid && pizzeriaForm.controls.phones.controls[i].touched}">
+          <span class="input-group-addon"><span class="glyphicon glyphicon-phone-alt"></span></span>
+          <input type="number" class="form-control" formControlName="number">
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-success" (click)="onAddPhone()">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+            <ng-template [ngIf]="i > 0">
+              <button type="button" class="btn btn-danger" (click)="onDeletePhone(i)">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12">
+    <div class="form-group has-feedback" formArrayName="pizzeConDett">
+      <label class="control-label" for="pizze">Pizze</label>
+      <div class="row" id="pizze" *ngFor="let pizzaConDett of pizzeFormArray.controls; let i = index" [formGroupName]="i" style="margin-top: 10px">
+        <div class="input-group" [ngClass]="{'has-success': pizzeriaForm.controls.pizzeConDett.controls[i].valid && pizzeriaForm.controls.pizzeConDett.controls[i].touched, 'has-error': !pizzeriaForm.controls.pizzeConDett.controls[i].valid && pizzeriaForm.controls.pizzeConDett.controls[i].touched}">
+          <span class="input-group-addon"><span class="glyphicon glyphicon-pizza-alt"></span></span>
+          <input type="text" class="form-control" formControlName="name">
+          <div class="form-group" formGroup="pizza">
+            <div class="form-group" type="text" formArrayName="ingredients">
+              <input *ngFor="let ingredient of pizzaConDett.controls.pizza.controls.ingredients; let i = index" type="text" class="form-control" formControlName="name">
+            </div>
+          </div>
+          <input type="text" class="form-control" formControlName="cost">
+          <!--<div class="input-group-btn">
+            <button type="button" class="btn btn-success" (click)="onAddPizza()">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+            <ng-template [ngIf]="i > 0">
+              <button type="button" class="btn btn-danger" (click)="onDeletePizza(i)">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+            </ng-template>
+          </div>-->
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Submit</button>
-  <div [hidden]="!(f.touched && !f.valid)" class="alert alert-danger pull-right">
+  <button class="btn btn-default" type="button" (click)="onReset()">Reset</button>
+  <button class="btn btn-primary" type="submit" [disabled]="!pizzeriaForm.valid">Submit</button>
+  <div [hidden]="!(pizzeriaForm.touched && !pizzeriaForm.valid)" class="alert alert-danger pull-right">
     <strong>Danger!</strong> Form is not valid
   </div>
 </form>
